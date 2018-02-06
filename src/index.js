@@ -95,7 +95,7 @@ export function mockResponse(urlMatcher, body, resolve = true, contentType) {
   });
 }
 
-global.fetch = (url, request, ...args) => new Promise((resolve, reject) => {
+window.fetch = (url, request, ...args) => new Promise((resolve, reject) => {
   fetchRequests.push(new FetchCall(url, request, args));
   const mockedResponse = getMockResponse(url);
 

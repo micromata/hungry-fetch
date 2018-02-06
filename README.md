@@ -1,16 +1,16 @@
 # Hungry Fetch
 
-Nomnomnom... lets you test your fetch calls.
+Nomnomnom … lets you test your fetch calls.
 
 [![Build Status](https://travis-ci.org/micromata/hungry-fetch.svg?branch=master)](https://travis-ci.org/micromata/hungry-fetch)
 
-## What it does not
+## What it doesn’t do
 
 *Hungry Fetch* does not polyfill the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API). Furthermore it requires `Response` to be available, so you might actualy need to [polyfill the Fetch API](https://github.com/github/fetch) before using *Hungry Fetch*.
 
-## How Does It Work?
+## How does it work?
 
-*Hungry Fetch* monkey patches `window.fetch` and saves all calls to `fetch(…)` with it's parameters.
+*Hungry Fetch* monkey patches `window.fetch` and saves all calls to `fetch(…)` with it’s parameters.
 
 ## Installation
 
@@ -42,7 +42,7 @@ test('test network call', () => {
 
 ### Mock response
 
-You can mock responses for explicit URLs. You may also use `*` as url matcher to match any URL. Explicit URLs are stronger weighted than the wildcard matcher, so you can specify a default response and add different responses for explicit URL's.
+You can mock responses for explicit URLs. You may also use `*` as url matcher to match any URL. Explicit URLs are stronger weighted than the wildcard matcher, so you can specify a default response and add different responses for explicit URLs.
 
 ```javascript
 import hungryFetch from 'hungry-fetch';

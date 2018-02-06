@@ -2,6 +2,8 @@
 
 Nomnomnom... lets you test your fetch calls.
 
+[![Build Status](https://travis-ci.org/micromata/hungry-fetch.svg?branch=master)](https://travis-ci.org/micromata/hungry-fetch)
+
 ## What it does not
 
 *Hungry Fetch* does not polyfill the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API). Furthermore it requires `Response` to be available, so you might actualy need to [polyfill the Fetch API](https://github.com/github/fetch) before using *Hungry Fetch*.

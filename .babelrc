@@ -1,0 +1,31 @@
+{
+  "env": {
+    "test": {
+      "plugins": [
+        ["transform-es2015-modules-commonjs", { "loose": true }]
+      ]
+    },
+    "commonjs": {
+      "plugins": [
+        ["transform-es2015-modules-commonjs", { "loose": true }]
+      ],
+      "ignore": [
+        "**/*.test.js"
+      ]
+    },
+    "es": {
+      "plugins": [],
+      "ignore": [
+        "**/*.test.js"
+      ]
+    },
+    "rollup": {
+      "plugins": [
+        "external-helpers"
+      ],
+      "ignore": [
+        "**/*.test.js"
+      ]
+    }
+  }
+}

@@ -1,11 +1,8 @@
 # Hungry Fetch
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/micromata/hungry-fetch.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.org/micromata/hungry-fetch.svg?branch=master)](https://travis-ci.org/micromata/hungry-fetch) [![npm](https://img.shields.io/npm/v/hungry-fetch.svg)](https://www.npmjs.com/package/hungry-fetch) [![Greenkeeper badge](https://badges.greenkeeper.io/micromata/hungry-fetch.svg)](https://greenkeeper.io/)
 
 Nomnomnom … lets you test your fetch calls.
-
-[![Build Status](https://travis-ci.org/micromata/hungry-fetch.svg?branch=master)](https://travis-ci.org/micromata/hungry-fetch)
-[![npm](https://img.shields.io/npm/v/hungry-fetch.svg)](https://www.npmjs.com/package/hungry-fetch)
 
 ## What it doesn’t do
 

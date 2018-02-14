@@ -63,4 +63,17 @@ describe('hungryFetch', () => {
       expect(body.data).toBe('some data');
     });
   });
+
+  it('custom status code', () => {
+    hungryFetch.mockResponse('*', {
+      data: 'Unauthorized',
+    }, {
+      status: 401,
+    });
+
+    return fetch('/path/to/nowhere', {}).then((response) => {
+      expect(response.status).toBe(401);
+      expect(response.ok).toBe(false);
+    });
+  });
 });

@@ -24,10 +24,13 @@ function getResponse(responseData) {
     contentType = 'text/plain';
   }
 
+  const { config } = responseData;
+
   return new Response(body, {
     headers: {
-      'Content-Type': responseData.contentType || contentType,
+      'Content-Type': config.contentType || contentType,
     },
+    status: config.status || 200,
   });
 }
 
@@ -86,12 +89,12 @@ export function singleCall() {
   return lastCall();
 }
 
-export function mockResponse(urlMatcher, body, resolve = true, contentType) {
+export function mockResponse(urlMatcher, body, config = {}, resolve = true) {
   mockResponses.push({
     matcher: urlMatcher,
     body,
     resolve,
-    contentType,
+    config,
   });
 }
 

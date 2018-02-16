@@ -6,7 +6,7 @@ Nomnomnom … lets you test your fetch calls.
 
 ## What it doesn’t do
 
-*Hungry Fetch* does not polyfill the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API). Furthermore it requires `Response` to be available, so you might actualy need to [polyfill the Fetch API](https://github.com/github/fetch) before using *Hungry Fetch*.
+*Hungry Fetch* does not polyfill the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API). Furthermore it requires `Response` to be available, so you might actually need to [polyfill the Fetch API](https://github.com/github/fetch) before using *Hungry Fetch*.
 
 ## How does it work?
 

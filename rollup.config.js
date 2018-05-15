@@ -7,9 +7,11 @@ import uglify from 'rollup-plugin-uglify';
 const env = process.env.NODE_ENV;
 
 const config = {
-  entry: 'src/index.js',
-  format: 'umd',
-  moduleName: 'HungryFetch',
+  input: 'src/index.js',
+  output: {
+    name: 'HungryFetch',
+    format: 'umd',
+  },
   plugins: [
     nodeResolve(),
     babel({

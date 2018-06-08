@@ -52,14 +52,40 @@ test('test response', () => {
     data: 'some data'
   });
 
-  return fetch('/path/to/nowhere', {
-    body: JSON.stringify({
-      data: 'I am a body'
-    })
-  }).then(response => {
+  return fetch('/path/to/nowhere').then(response => {
     return response.json();
   }).then(body => {
     expect(body.data).toBe('some data');
+  });
+});
+```
+
+
+### Advanced response
+
+You can set some parameters of the response with the third argument of `mockResponse(…)`.
+
+```javascript
+import hungryFetch from 'hungry-fetch';
+
+test('advanced response', () => {
+  hungryFetch.mockResponse('/somewhere', {}, {
+    // set custom status code
+    status: 204,
+
+    // set custom content type
+    contentType: 'plain/text',
+
+    // set additional headers
+    headers: {
+      'X-MyHeader': 'hello',
+    },
+  });
+
+  return fetch('/somewhere').then(res => {
+    expect(res.status).toBe(204);
+    expect(res.headers.get('Content-Type')).toBe('plain/text');
+    expect(res.headers.get('X-MyHeader')).toBe('hello');
   });
 });
 ```

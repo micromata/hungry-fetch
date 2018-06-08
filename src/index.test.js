@@ -64,6 +64,14 @@ describe('hungryFetch', () => {
     });
   });
 
+  it('plaintext response', () => {
+    hungryFetch.mockResponse('*', 'Hello');
+
+    return fetch('/path/to/nowhere', {}).then(response => response.text()).then((text) => {
+      expect(text).toBe('Hello');
+    });
+  });
+
   it('custom status code', () => {
     hungryFetch.mockResponse('*', {
       data: 'Unauthorized',
@@ -75,5 +83,42 @@ describe('hungryFetch', () => {
       expect(response.status).toBe(401);
       expect(response.ok).toBe(false);
     });
+  });
+
+  it('custom headers', () => {
+    hungryFetch.mockResponse('*', {
+      data: 'Something',
+    }, {
+      headers: {
+        'X-TestHeader': 'Hello',
+      },
+    });
+
+    return fetch('/path/to/nowhere', {}).then((response) => {
+      expect(response.headers.get('X-TestHeader')).toBe('Hello');
+    });
+  });
+
+  it('no matching response', () => {
+    hungryFetch.mockResponse('somewhere', {});
+
+    return fetch('/path/to/nowhere', {}).then((response) => {
+      expect(response).toBe(undefined);
+    });
+  });
+
+  it('select explicit response over wildcard', () => {
+    hungryFetch.mockResponse('/somewhere', 'hello');
+    hungryFetch.mockResponse('*', {});
+
+    return fetch('/somewhere', {}).then(response => response.text()).then((text) => {
+      expect(text).toBe('hello');
+    });
+  });
+
+  it('reject response', () => {
+    hungryFetch.mockResponse('*', 'hello', {}, false);
+
+    return expect(fetch('/anywhere', {})).rejects.toThrow();
   });
 });

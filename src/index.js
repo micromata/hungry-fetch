@@ -29,6 +29,7 @@ function getResponse(responseData) {
   return new Response(body, {
     headers: {
       'Content-Type': config.contentType || contentType,
+      ...(config.headers || {}),
     },
     status: config.status || 200,
   });
@@ -108,7 +109,7 @@ window.fetch = (url, request, ...args) => new Promise((resolve, reject) => {
     if (mockedResponse.resolve) {
       resolve(response);
     } else {
-      reject(response);
+      reject(new Error('Failed to fetch'));
     }
   } else {
     resolve();

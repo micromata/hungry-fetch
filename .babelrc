@@ -2,11 +2,13 @@
   "env": {
     "test": {
       "plugins": [
+        "transform-object-rest-spread",
         ["transform-es2015-modules-commonjs", { "loose": true }]
       ]
     },
     "commonjs": {
       "plugins": [
+        "transform-object-rest-spread",
         ["transform-es2015-modules-commonjs", { "loose": true }]
       ],
       "ignore": [
@@ -14,13 +16,16 @@
       ]
     },
     "es": {
-      "plugins": [],
+      "plugins": [
+        "transform-object-rest-spread"
+      ],
       "ignore": [
         "**/*.test.js"
       ]
     },
     "rollup": {
       "plugins": [
+        "transform-object-rest-spread",
         "external-helpers"
       ],
       "ignore": [

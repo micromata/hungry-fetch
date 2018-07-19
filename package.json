@@ -43,7 +43,7 @@
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-plugin-import": "^2.13.0",
     "jest": "^23.4.1",
-    "microbundle": "^0.5.1",
+    "microbundle": "^0.6.0",
     "rimraf": "^2.6.2",
     "whatwg-fetch": "^2.0.4"
   },

@@ -112,7 +112,7 @@ export function mockResponse(urlMatcher: string, body: Body, config = {}, resolv
   });
 }
 
-(window || global).fetch = (url: string, request, ...args) => new Promise((resolve, reject) => {
+(typeof window !== 'undefined' ? window : global as any).fetch = (url: string, request: RequestInit, ...args: any[]) => new Promise((resolve, reject) => {
   fetchRequests.push(new FetchCall(url, request, args));
   const mockedResponse = getMockResponse(url);
 

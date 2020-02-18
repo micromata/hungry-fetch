@@ -10,18 +10,18 @@ import FetchCall from './fetch-call';
 let fetchRequests: FetchCall[] = [];
 let mockResponses: ResponseData[] = [];
 
-export type Body = Object | string;
+export type Body = Record<string, any> | string;
 
 export type ResponseData = {
   matcher: string;
-  body: Object | string;
+  body: Record<string, any> | string;
   config: {
     contentType?: string;
-    headers?: {[key: string]: string},
-    status?: number,
-  }
+    headers?: { [key: string]: string };
+    status?: number;
+  };
   resolve?: boolean;
-}
+};
 
 function getResponse(responseData: ResponseData) {
   let body;
@@ -97,13 +97,20 @@ export function lastCall() {
 
 export function singleCall() {
   if (fetchRequests.length !== 1) {
-    throw new Error(`fetch(…) not called exactly one time! It was called ${fetchRequests.length} times.`);
+    throw new Error(
+      `fetch(…) not called exactly one time! It was called ${fetchRequests.length} times.`
+    );
   }
 
   return lastCall();
 }
 
-export function mockResponse(urlMatcher: string, body: Body, config = {}, resolve = true) {
+export function mockResponse(
+  urlMatcher: string,
+  body: Body,
+  config = {},
+  resolve = true
+) {
   mockResponses.push({
     matcher: urlMatcher,
     body,
@@ -112,19 +119,24 @@ export function mockResponse(urlMatcher: string, body: Body, config = {}, resolv
   });
 }
 
-(typeof window !== 'undefined' ? window : global as any).fetch = (url: string, request: RequestInit, ...args: any[]) => new Promise((resolve, reject) => {
-  fetchRequests.push(new FetchCall(url, request, args));
-  const mockedResponse = getMockResponse(url);
+(typeof window !== 'undefined' ? window : (global as any)).fetch = (
+  url: string,
+  request: RequestInit,
+  ...args: any[]
+) =>
+  new Promise((resolve, reject) => {
+    fetchRequests.push(new FetchCall(url, request, args));
+    const mockedResponse = getMockResponse(url);
 
-  if (mockedResponse) {
-    const response = getResponse(mockedResponse);
+    if (mockedResponse) {
+      const response = getResponse(mockedResponse);
 
-    if (mockedResponse.resolve) {
-      resolve(response);
+      if (mockedResponse.resolve) {
+        resolve(response);
+      } else {
+        reject(new Error('Failed to fetch'));
+      }
     } else {
-      reject(new Error('Failed to fetch'));
+      resolve();
     }
-  } else {
-    resolve();
-  }
-});
+  });

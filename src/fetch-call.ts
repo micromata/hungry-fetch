@@ -2,7 +2,7 @@
  * Container for storing call-data, providing some convenience functions.
  */
 export default class FetchCall {
-  url: String;
+  url: string;
   additionalArgs: any;
   request: RequestInit;
 
@@ -16,8 +16,8 @@ export default class FetchCall {
    * Parses the request body from json.
    * @returns The parsed object.
    */
-  json() {
-    if (typeof this.request.body !== "string")
+  json(): any {
+    if (typeof this.request.body !== 'string')
       throw Error(`Can't parse json from ${typeof this.request.body}`);
 
     return JSON.parse(this.request.body);
@@ -27,7 +27,7 @@ export default class FetchCall {
    * Gets the body of the request.
    * @returns The body.
    */
-  body() {
+  body(): any {
     return this.request.body;
   }
 }

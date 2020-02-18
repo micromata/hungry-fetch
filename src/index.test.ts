@@ -5,13 +5,14 @@ describe('hungryFetch', () => {
     hungryFetch.clear();
   });
 
-  it('logs fetch calls', () => fetch('path/to/nowhere', {
-    body: 'I am a body',
-    method: 'POST',
-  }).then(() => {
-    expect(hungryFetch.calls().length).toBe(1);
-    expect(hungryFetch.lastCall().body()).toBe('I am a body');
-  }));
+  it('logs fetch calls', () =>
+    fetch('path/to/nowhere', {
+      body: 'I am a body',
+      method: 'POST',
+    }).then(() => {
+      expect(hungryFetch.calls().length).toBe(1);
+      expect(hungryFetch.lastCall().body()).toBe('I am a body');
+    }));
 
   it('singleCall throws Error when there was more than one call', () => {
     const request = {
@@ -19,7 +20,10 @@ describe('hungryFetch', () => {
       method: 'POST',
     };
 
-    return Promise.all([fetch('path/to/nowhere', request), fetch('path/to/nowhere', request)]).then(() => {
+    return Promise.all([
+      fetch('path/to/nowhere', request),
+      fetch('path/to/nowhere', request),
+    ]).then(() => {
       expect(() => {
         hungryFetch.singleCall();
       }).toThrow();
@@ -59,42 +63,54 @@ describe('hungryFetch', () => {
       body: JSON.stringify({
         data: 'I am a body',
       }),
-    }).then(response => response.json()).then((body) => {
-      expect(body.data).toBe('some data');
-    });
+    })
+      .then(response => response.json())
+      .then(body => {
+        expect(body.data).toBe('some data');
+      });
   });
 
   it('plaintext response', () => {
     hungryFetch.mockResponse('*', 'Hello');
 
-    return fetch('/path/to/nowhere', {}).then(response => response.text()).then((text) => {
-      expect(text).toBe('Hello');
-    });
+    return fetch('/path/to/nowhere', {})
+      .then(response => response.text())
+      .then(text => {
+        expect(text).toBe('Hello');
+      });
   });
 
   it('custom status code', () => {
-    hungryFetch.mockResponse('*', {
-      data: 'Unauthorized',
-    }, {
-      status: 401,
-    });
+    hungryFetch.mockResponse(
+      '*',
+      {
+        data: 'Unauthorized',
+      },
+      {
+        status: 401,
+      }
+    );
 
-    return fetch('/path/to/nowhere', {}).then((response) => {
+    return fetch('/path/to/nowhere', {}).then(response => {
       expect(response.status).toBe(401);
       expect(response.ok).toBe(false);
     });
   });
 
   it('custom headers', () => {
-    hungryFetch.mockResponse('*', {
-      data: 'Something',
-    }, {
-      headers: {
-        'X-TestHeader': 'Hello',
+    hungryFetch.mockResponse(
+      '*',
+      {
+        data: 'Something',
       },
-    });
+      {
+        headers: {
+          'X-TestHeader': 'Hello',
+        },
+      }
+    );
 
-    return fetch('/path/to/nowhere', {}).then((response) => {
+    return fetch('/path/to/nowhere', {}).then(response => {
       expect(response.headers.get('X-TestHeader')).toBe('Hello');
     });
   });
@@ -102,7 +118,7 @@ describe('hungryFetch', () => {
   it('no matching response', () => {
     hungryFetch.mockResponse('somewhere', {});
 
-    return fetch('/path/to/nowhere', {}).then((response) => {
+    return fetch('/path/to/nowhere', {}).then(response => {
       expect(response).toBe(undefined);
     });
   });
@@ -111,17 +127,21 @@ describe('hungryFetch', () => {
     hungryFetch.mockResponse('/somewhere', 'hello');
     hungryFetch.mockResponse('*', {});
 
-    return fetch('/somewhere', {}).then(response => response.text()).then((text) => {
-      expect(text).toBe('hello');
-    });
+    return fetch('/somewhere', {})
+      .then(response => response.text())
+      .then(text => {
+        expect(text).toBe('hello');
+      });
   });
 
   it('call fetch(…) without request parameters', () => {
     hungryFetch.mockResponse('/somewhere', 'hello');
 
-    return fetch('/somewhere').then(response => response.text()).then((text) => {
-      expect(text).toBe('hello');
-    });
+    return fetch('/somewhere')
+      .then(response => response.text())
+      .then(text => {
+        expect(text).toBe('hello');
+      });
   });
 
   it('reject response', () => {
@@ -136,7 +156,7 @@ describe('hungryFetch', () => {
     await fetch('/somewhere', {}).then(response => response.text());
 
     expect(() => {
-      hungryFetch.lastCall().json()
+      hungryFetch.lastCall().json();
     }).toThrow();
   });
 });

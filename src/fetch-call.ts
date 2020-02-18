@@ -2,7 +2,11 @@
  * Container for storing call-data, providing some convenience functions.
  */
 export default class FetchCall {
-  constructor(url, request, additionalArgs) {
+  url: String;
+  additionalArgs: any;
+  request: RequestInit;
+
+  constructor(url: string, request: RequestInit = {}, additionalArgs: any) {
     this.request = request;
     this.url = url;
     this.additionalArgs = additionalArgs;
@@ -13,6 +17,9 @@ export default class FetchCall {
    * @returns The parsed object.
    */
   json() {
+    if (typeof this.request.body !== "string")
+      throw Error(`Can't parse json from ${typeof this.request.body}`);
+
     return JSON.parse(this.request.body);
   }
 

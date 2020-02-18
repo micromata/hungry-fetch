@@ -6,6 +6,7 @@
   "umd:main": "dist/hungry-fetch.umd.js",
   "module": "dist/hungry-fetch.m.js",
   "source": "src/index.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "microbundle",
     "clean": "rimraf dist coverage",

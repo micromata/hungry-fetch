@@ -7,10 +7,23 @@
 
 import FetchCall from './fetch-call';
 
-let fetchRequests = [];
-let mockResponses = [];
+let fetchRequests: FetchCall[] = [];
+let mockResponses: ResponseData[] = [];
 
-function getResponse(responseData) {
+export type Body = Object | string;
+
+export type ResponseData = {
+  matcher: string;
+  body: Object | string;
+  config: {
+    contentType?: string;
+    headers?: {[key: string]: string},
+    status?: number,
+  }
+  resolve?: boolean;
+}
+
+function getResponse(responseData: ResponseData) {
   let body;
   let contentType;
 
@@ -35,7 +48,7 @@ function getResponse(responseData) {
   });
 }
 
-function testUrl(url, matcher) {
+function testUrl(url: string, matcher: string) {
   if (matcher === '*') {
     return 0.1;
   }
@@ -47,10 +60,10 @@ function testUrl(url, matcher) {
   return 0;
 }
 
-function getMockResponse(url) {
+function getMockResponse(url: string): ResponseData | null {
   if (mockResponses.length === 0) return null;
 
-  return mockResponses.reduce((acc, cur) => {
+  return mockResponses.reduce<ResponseData | null>((acc, cur) => {
     const curWeight = testUrl(url, cur.matcher);
 
     if (curWeight === 0) {
@@ -90,7 +103,7 @@ export function singleCall() {
   return lastCall();
 }
 
-export function mockResponse(urlMatcher, body, config = {}, resolve = true) {
+export function mockResponse(urlMatcher: string, body: Body, config = {}, resolve = true) {
   mockResponses.push({
     matcher: urlMatcher,
     body,
@@ -99,7 +112,7 @@ export function mockResponse(urlMatcher, body, config = {}, resolve = true) {
   });
 }
 
-window.fetch = (url, request, ...args) => new Promise((resolve, reject) => {
+window.fetch = (url: string, request, ...args) => new Promise((resolve, reject) => {
   fetchRequests.push(new FetchCall(url, request, args));
   const mockedResponse = getMockResponse(url);
 

@@ -116,9 +116,27 @@ describe('hungryFetch', () => {
     });
   });
 
+  it('call fetch(…) without request parameters', () => {
+    hungryFetch.mockResponse('/somewhere', 'hello');
+
+    return fetch('/somewhere').then(response => response.text()).then((text) => {
+      expect(text).toBe('hello');
+    });
+  });
+
   it('reject response', () => {
     hungryFetch.mockResponse('*', 'hello', {}, false);
 
     return expect(fetch('/anywhere', {})).rejects.toThrow();
+  });
+
+  it('throws error when trying to parse non-text body as json', async () => {
+    hungryFetch.mockResponse('*', new Blob());
+
+    await fetch('/somewhere', {}).then(response => response.text());
+
+    expect(() => {
+      hungryFetch.lastCall().json()
+    }).toThrow();
   });
 });

@@ -1,18 +1,9 @@
 {
-  "extends": "airbnb-base",
+  "root": true,
+  "extends": ["plugin:@typescript-eslint/recommended"],
   "rules": {
-    "prefer-destructuring": ["error", {
-      "VariableDeclarator": {
-        "array": true,
-        "object": true
-      },
-      "AssignmentExpression": {
-        "array": false,
-        "object": false
-      }
-    }, {
-      "enforceForRenamedProperties": false
-    }]
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   },
   "env": {
     "es6": true,

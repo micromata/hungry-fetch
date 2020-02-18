@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "noImplicitAny": true,
-    "strictNullChecks": true,
+    "strictNullChecks": true
   },
   "include": [
     "src/**/*"
-  ],
+  ]
 }

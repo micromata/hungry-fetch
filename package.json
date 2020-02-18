@@ -10,7 +10,7 @@
   "scripts": {
     "build": "microbundle",
     "clean": "rimraf dist coverage",
-    "lint": "eslint src test",
+    "lint": "eslint --ext .ts,.js src",
     "prepare": "npm run clean && npm run build",
     "test": "jest",
     "test:coverage": "jest --coverage"
@@ -38,6 +38,8 @@
   "homepage": "https://github.com/micromata/hungry-fetch#readme",
   "devDependencies": {
     "@types/jest": "^25.1.2",
+    "@typescript-eslint/eslint-plugin": "^2.20.0",
+    "@typescript-eslint/parser": "^2.20.0",
     "babel-jest": "^25.0.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",

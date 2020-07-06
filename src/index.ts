@@ -6,6 +6,7 @@
  */
 
 import FetchCall from './fetch-call';
+import { testWildcardPattern } from './url-pattern';
 
 let fetchRequests: FetchCall[] = [];
 let mockResponses: ResponseData[] = [];
@@ -13,7 +14,7 @@ let mockResponses: ResponseData[] = [];
 export type Body = Record<string, any> | string;
 
 export type ResponseData = {
-  matcher: string;
+  pattern: string;
   body: Record<string, any> | string;
   config: {
     contentType?: string;
@@ -48,15 +49,23 @@ function getResponse(responseData: ResponseData) {
   });
 }
 
-function testUrl(url: string, matcher: string) {
-  if (matcher === '*') {
-    return 0.1;
-  }
-
-  if (matcher === url) {
+function testUrl(url: string, pattern: string) {
+  // exact match
+  if (url === pattern) {
     return 1.0;
   }
 
+  // any pattern
+  if (pattern === '*') {
+    return 0.1;
+  }
+
+  // match using wildcards
+  if (testWildcardPattern(url, pattern)) {
+    return 0.5;
+  }
+
+  // no match
   return 0;
 }
 
@@ -64,13 +73,13 @@ function getMockResponse(url: string): ResponseData | null {
   if (mockResponses.length === 0) return null;
 
   return mockResponses.reduce<ResponseData | null>((acc, cur) => {
-    const curWeight = testUrl(url, cur.matcher);
+    const curWeight = testUrl(url, cur.pattern);
 
     if (curWeight === 0) {
       return acc;
     }
 
-    if (acc === null || curWeight > testUrl(url, acc.matcher)) {
+    if (acc === null || curWeight > testUrl(url, acc.pattern)) {
       return cur;
     }
 
@@ -105,14 +114,32 @@ export function singleCall() {
   return lastCall();
 }
 
+/**
+ * Mock a response with a url matching the specified pattern.
+ *
+ * The pattern supports wildcards for parts of the url by using an asterisk (\*).
+ * Example: /category/*&#47;details
+ *
+ * You may also use a single asterisk "*" to match all routes.
+ *
+ * The matchers are weighted so that a perfect match has the highest priority.
+ * A match using wildcard components has the second highest prority. The
+ * single asterisk matcher has the lowest priority. This helps to configure
+ * default responses.
+ *
+ * @param urlMatcher The matcher incoming urls will be checked against.
+ * @param body The body of the response.
+ * @param config An optional config.
+ * @param resolve Set to false to reject matching fetch calls.
+ */
 export function mockResponse(
-  urlMatcher: string,
+  pattern: string,
   body: Body,
   config = {},
   resolve = true
 ) {
   mockResponses.push({
-    matcher: urlMatcher,
+    pattern,
     body,
     resolve,
     config,

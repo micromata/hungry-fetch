@@ -64,8 +64,8 @@ describe('hungryFetch', () => {
         data: 'I am a body',
       }),
     })
-      .then(response => response.json())
-      .then(body => {
+      .then((response) => response.json())
+      .then((body) => {
         expect(body.data).toBe('some data');
       });
   });
@@ -74,8 +74,8 @@ describe('hungryFetch', () => {
     hungryFetch.mockResponse('*', 'Hello');
 
     return fetch('/path/to/nowhere', {})
-      .then(response => response.text())
-      .then(text => {
+      .then((response) => response.text())
+      .then((text) => {
         expect(text).toBe('Hello');
       });
   });
@@ -91,7 +91,7 @@ describe('hungryFetch', () => {
       }
     );
 
-    return fetch('/path/to/nowhere', {}).then(response => {
+    return fetch('/path/to/nowhere', {}).then((response) => {
       expect(response.status).toBe(401);
       expect(response.ok).toBe(false);
     });
@@ -110,17 +110,16 @@ describe('hungryFetch', () => {
       }
     );
 
-    return fetch('/path/to/nowhere', {}).then(response => {
+    return fetch('/path/to/nowhere', {}).then((response) => {
       expect(response.headers.get('X-TestHeader')).toBe('Hello');
     });
   });
 
-  it('no matching response', () => {
-    hungryFetch.mockResponse('somewhere', {});
+  it('no matching response', async () => {
+    hungryFetch.mockResponse('/path/to/somewhere', {});
 
-    return fetch('/path/to/nowhere', {}).then(response => {
-      expect(response).toBe(undefined);
-    });
+    expect(await fetch('/path/to/nowhere', {})).toBe(undefined);
+    expect(await fetch('/path/to/somewhere/different', {})).toBe(undefined);
   });
 
   it('select explicit response over wildcard', () => {
@@ -128,8 +127,8 @@ describe('hungryFetch', () => {
     hungryFetch.mockResponse('*', {});
 
     return fetch('/somewhere', {})
-      .then(response => response.text())
-      .then(text => {
+      .then((response) => response.text())
+      .then((text) => {
         expect(text).toBe('hello');
       });
   });
@@ -138,8 +137,8 @@ describe('hungryFetch', () => {
     hungryFetch.mockResponse('/somewhere', 'hello');
 
     return fetch('/somewhere')
-      .then(response => response.text())
-      .then(text => {
+      .then((response) => response.text())
+      .then((text) => {
         expect(text).toBe('hello');
       });
   });
@@ -153,10 +152,24 @@ describe('hungryFetch', () => {
   it('throws error when trying to parse non-text body as json', async () => {
     hungryFetch.mockResponse('*', new Blob());
 
-    await fetch('/somewhere', {}).then(response => response.text());
+    await fetch('/somewhere', {}).then((response) => response.text());
 
     expect(() => {
       hungryFetch.lastCall().json();
     }).toThrow();
+  });
+
+  it('use * to mark wildcard segments', async () => {
+    hungryFetch.mockResponse('/some/*/test', 'hello');
+
+    await fetch('/some/random/test', {})
+      .then((response) => response.text())
+      .then((text) => {
+        expect(text).toBe('hello');
+      });
+
+    expect(await fetch('/some/fail', {})).toBe(undefined);
+    expect(await fetch('/some/random/fail', {})).toBe(undefined);
+    expect(await fetch('/some/random/test/failure', {})).toBe(undefined);
   });
 });

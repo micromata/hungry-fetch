@@ -1,4 +1,12 @@
+# npm
 node_modules
+
+# bundler
 dist
-coverage
 .rts2_cache_*
+
+# tests
+coverage
+
+# VS Code
+.vscode

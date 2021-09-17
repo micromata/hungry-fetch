@@ -1,6 +1,6 @@
 # Hungry Fetch
 
-[![Build Status](https://travis-ci.org/micromata/hungry-fetch.svg?branch=master)](https://travis-ci.org/micromata/hungry-fetch) [![npm](https://img.shields.io/npm/v/hungry-fetch.svg)](https://www.npmjs.com/package/hungry-fetch) [![Greenkeeper badge](https://badges.greenkeeper.io/micromata/hungry-fetch.svg)](https://greenkeeper.io/)
+![Tests](https://github.com/micromata/hungry-fetch/actions/workflows/tests.yml/badge.svg) [![npm](https://img.shields.io/npm/v/hungry-fetch.svg)](https://www.npmjs.com/package/hungry-fetch)
 
 Nomnomnom … lets you test your fetch calls.
 

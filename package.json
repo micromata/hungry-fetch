@@ -57,6 +57,7 @@
     "setupFiles": [
       "<rootDir>/jestSetup.ts"
     ],
-    "preset": "ts-jest"
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom"
   }
 }

@@ -1,6 +1,6 @@
 # Hungry Fetch
 
-![Tests](https://github.com/micromata/hungry-fetch/actions/workflows/tests.yml/badge.svg) [![npm](https://img.shields.io/npm/v/hungry-fetch.svg)](https://www.npmjs.com/package/hungry-fetch)
+[![Tests](https://github.com/micromata/hungry-fetch/actions/workflows/tests.yml/badge.svg)](https://github.com/micromata/hungry-fetch/actions/workflows/tests.yml) [![npm](https://img.shields.io/npm/v/hungry-fetch.svg)](https://www.npmjs.com/package/hungry-fetch)
 
 Nomnomnom … lets you test your fetch calls.
 

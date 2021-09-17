@@ -13,7 +13,8 @@
     "lint": "eslint --ext .ts,.js src",
     "prepare": "npm run clean && npm run build",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test-coverage": "jest --coverage",
+    "release": "np"
   },
   "repository": {
     "type": "git",
@@ -48,6 +49,7 @@
     "eslint-plugin-import": "^2.24.2",
     "jest": "^27.2.0",
     "microbundle": "^0.13.3",
+    "np": "^7.5.0",
     "rimraf": "^3.0.0",
     "ts-jest": "^27.0.5",
     "typescript": "^4.4.3",

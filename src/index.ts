@@ -151,7 +151,7 @@ export function mockResponse(
   request: RequestInit,
   ...args: any[]
 ) =>
-  new Promise((resolve, reject) => {
+  new Promise<void | Response>((resolve, reject) => {
     fetchRequests.push(new FetchCall(url, request, args));
     const mockedResponse = getMockResponse(url);
 

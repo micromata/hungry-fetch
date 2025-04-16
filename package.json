@@ -2,9 +2,14 @@
   "name": "hungry-fetch",
   "version": "0.9.2",
   "description": "A hungry fetch mock.",
-  "main": "./dist/hungry-fetch.umd.js",
-  "module": "./dist/hungry-fetch.module.js",
-  "exports": "./dist/hungry-fetch.modern.js",
+  "main": "dist/hungry-fetch.js",
+  "umd:main": "dist/hungry-fetch.umd.js",
+  "module": "dist/hungry-fetch.module.js",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "require": "./dist/hungry-fetch.js",
+    "default": "./dist/hungry-fetch.modern.js"
+  },
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -48,7 +53,7 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.24.2",
     "jest": "^27.2.0",
-    "microbundle": "^0.13.3",
+    "microbundle": "^0.15.1",
     "np": "^7.6.3",
     "rimraf": "^3.0.0",
     "ts-jest": "^27.0.5",

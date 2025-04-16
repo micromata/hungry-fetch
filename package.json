@@ -1,6 +1,6 @@
 {
   "name": "hungry-fetch",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "A hungry fetch mock.",
   "main": "dist/hungry-fetch.js",
   "umd:main": "dist/hungry-fetch.umd.js",
